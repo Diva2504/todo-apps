@@ -19,12 +19,25 @@ type InputModels struct {
 	Complete bool   `json:"complete"`
 }
 
-// swagger
+// GetAll godoc
+// @Summary Get details of all TODOS
+// @Description Get all TODOS
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} models.Todos
+// @Router / [get]
 func GetAll(c *gin.Context) {
 	c.JSON(http.StatusOK, todos)
 }
 
-// swagger
+// GetTodo godoc
+// @Summary Get details of TODOS by ID
+// @Description Get TODOS by ID
+// @Accept  json
+// @Produce  json
+// @Param   id     path    string     true        "Id"
+// @Success 200 {array} models.Todos
+// @Router /:id [get]
 func GetTodo(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	singleTodo, err := GetById(id)
@@ -44,7 +57,14 @@ func GetById(id int) (*models.Todos, error) {
 	return nil, errors.New("data not found")
 }
 
-// swagger
+// CreateTodo godoc
+// @Summary Create a new TODOS
+// @Description Get all TODOS
+// @Accept  json
+// @Produce  json
+// @Param   id     path    string     true        "Id"
+// @Success 200 {array} models.Todos
+// @Router / [post]
 func CreateTodo(c *gin.Context) {
 	var (
 		inputTodos InputModels
@@ -101,11 +121,11 @@ func DeleteTodo(c *gin.Context) {
 	inputId := c.Param("id")
 	id, _ := strconv.Atoi(inputId)
 	id--
-  temp := todos[id]
+	temp := todos[id]
 	todos = append(todos[:id], todos[id+1:]...)
 	result = gin.H{
 		"deleted todos": temp,
-		"new todos": todos,
+		"new todos":     todos,
 	}
 	c.JSON(http.StatusOK, result)
 }

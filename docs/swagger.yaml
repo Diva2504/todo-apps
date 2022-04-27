@@ -1,4 +1,82 @@
+basePath: /todos
+definitions:
+  models.Todos:
+    properties:
+      complete:
+        type: boolean
+      id:
+        type: integer
+      title:
+        type: string
+    type: object
+host: petstore.swagger.io:8080
 info:
-  contact: {}
-paths: {}
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: this is a simple TODOS App.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: TODOS API
+  version: "1.0"
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: Get all TODOS
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Todos'
+            type: array
+      summary: Get details of all TODOS
+    post:
+      consumes:
+      - application/json
+      description: Get all TODOS
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Todos'
+            type: array
+      summary: Create a new TODOS
+  /:id:
+    get:
+      consumes:
+      - application/json
+      description: Get TODOS by ID
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Todos'
+            type: array
+      summary: Get details of TODOS by ID
 swagger: "2.0"
