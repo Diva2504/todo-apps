@@ -36,7 +36,7 @@ func GetAll(c *gin.Context) {
 // @Accept  json
 // @Produce  json
 // @Param   id     path    string     true        "Id"
-// @Success 200 {array} models.Todos
+// @Success 200 {object} models.Todos
 // @Router /:id [get]
 func GetTodo(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
@@ -62,8 +62,8 @@ func GetById(id int) (*models.Todos, error) {
 // @Description Get all TODOS
 // @Accept  json
 // @Produce  json
-// @Param   id     path    string     true        "Id"
-// @Success 200 {array} models.Todos
+// @Param   todo     body    models.Todos     true        "Todo"
+// @Success 200 {object} models.Todos
 // @Router / [post]
 func CreateTodo(c *gin.Context) {
 	var (
@@ -89,7 +89,14 @@ func CreateTodo(c *gin.Context) {
 	c.JSON(http.StatusCreated, inputTodos)
 }
 
-// swagger
+// UpdateTodo godoc
+// @Summary Update or change the todo
+// @Description Update or change todo status
+// @Accept json
+// @Produce json
+// @Param todo body models.Todos true "Update todos"
+// @Success 200 {object} models.Todos
+// @Router /:id [PUT]
 func UpdateTodo(c *gin.Context) {
 	var (
 		result     gin.H
@@ -115,7 +122,14 @@ func UpdateTodo(c *gin.Context) {
 	c.JSON(http.StatusOK, result)
 }
 
-// swagger
+// DeleteTodo godoc
+// @Summary Deleted the todo
+// @Description Deleted the todo based on Id
+// @Accept json
+// @Produce json
+// @Param Id path string true "Id"
+// @Success 200 {object} models.Todos
+// @Router /:id [DELETE]
 func DeleteTodo(c *gin.Context) {
 	var result gin.H
 	inputId := c.Param("id")
